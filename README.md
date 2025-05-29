@@ -12,6 +12,7 @@ Au début, je n’avais pas nettoyé le timeout dans le useEffect (avec clearTim
 
 ![alt text](<images/Ex 1.png>)
 
+
 ### Exercice 2 : Context et Internationalisation
 
 J’ai créé un LanguageContext avec createContext et un provider qui stocke la langue sélectionnée (fr, en, etc.). Ce contexte est utilisé dans toute l’application pour afficher les textes dans la langue choisie.
@@ -22,6 +23,7 @@ Difficultés rencontrées :
 La gestion des traductions dans tous les composants demande de bien passer le contexte. Au début, certains composants n’étaient pas mis à jour car ils ne consommaient pas correctement le contexte.
 
 ![alt text](<images/Ex 2.png>)
+
 
 ### Exercice 3 : Hooks Personnalisés
 
@@ -34,6 +36,7 @@ Bien gérer les effets de synchronisation avec localStorage, notamment lors de l
 
 ![alt text](<images/Ex 3.png>)
 
+
 ### Exercice 4 : Gestion Asynchrone et Pagination
 
 J’ai ajouté un bouton de rechargement qui rappelle la fonction de récupération des données. J’ai aussi implémenté la pagination avec des états pour la page courante et le nombre total de pages, et deux boutons "Précédent" et "Suivant" pour naviguer.
@@ -45,8 +48,8 @@ Gérer la pagination avec les changements de page sans recharger toute la page, 
 
 ![alt text](<images/Ex 4.png>)
 
+
 ### Remarques générales
 
 Toutes les captures d’écran sont dans le dossier images à la racine du projet.
-
 Chaque exercice a fait l’objet d’au moins un commit avec un message clair mentionnant le numéro de l’exercice (ex : feat: exercice 1 - recherche et debounce)
