@@ -1,104 +1,52 @@
 # TP React Hooks - Application de Gestion de Produits
 
-Ce TP a pour objectif de mettre en pratique l'utilisation des Hooks React (useState, useEffect, useContext) ainsi que la création de Hooks personnalisés.
-
-## Installation et configuration initiale
-
-1. Cloner le dépôt :
-```bash
-git clone https://github.com/pr-daaif/tp-react-hooks.git
-cd tp-react-hooks
-```
-
-2. Créer votre propre dépôt sur Github et changer le remote :
-```bash
-# Supprimer le remote origine
-git remote remove origin
-
-# Ajouter votre nouveau remote
-git remote add origin https://github.com/[votre-username]/tp-react-hooks.git
-
-# Premier push
-git push -u origin main
-```
-
-3. Installer les dépendances :
-```bash
-npm install
-```
-
-4. Lancer l'application :
-```bash
-npm start
-```
-
-## Instructions pour le TP
-
-Pour chaque exercice :
-1. Lisez attentivement l'énoncé
-2. Implémentez la solution
-3. Testez votre implémentation (pensez à faire des copies d'écran)
-4. Mettez à jour la section correspondante dans ce README avec :
-   - Une brève explication de votre solution
-   - Des captures d'écran montrant le fonctionnement
-   - Les difficultés rencontrées et comment vous les avez résolues
-5. Commitez vos changements avec un message descriptif
-
-### Exercice 1 : État et Effets 
-#### Objectif : Implémenter une recherche en temps réel
-
-- [ ] 1.1 Modifier le composant ProductSearch pour utiliser la recherche
-- [ ] 1.2 Implémenter le debounce sur la recherche
-- [ ] 1.3 Documenter votre solution ici
-
-_Votre réponse pour l'exercice 1 :_
-```
-Expliquez votre solution ici
-[Ajoutez vos captures d'écran]
-```
-
-### Exercice 2 : Context et Internationalisation
-#### Objectif : Gérer les préférences de langue
-
-- [ ] 2.1 Créer le LanguageContext
-- [ ] 2.2 Ajouter le sélecteur de langue
-- [ ] 2.3 Documenter votre solution ici
-
-_Votre réponse pour l'exercice 2 :_
-```
-Expliquez votre solution ici
-[Ajoutez vos captures d'écran]
-```
-
-### Exercice 3 : Hooks Personnalisés
-#### Objectif : Créer des hooks réutilisables
-
-- [ ] 3.1 Créer le hook useDebounce
-- [ ] 3.2 Créer le hook useLocalStorage
-- [ ] 3.3 Documenter votre solution ici
-
-_Votre réponse pour l'exercice 3 :_
-```
-Expliquez votre solution ici
-[Ajoutez vos captures d'écran]
-```
-
-### Exercice 4 : Gestion Asynchrone et Pagination
-#### Objectif : Gérer le chargement et la pagination
-
-- [ ] 4.1 Ajouter le bouton de rechargement
-- [ ] 4.2 Implémenter la pagination
-- [ ] 4.3 Documenter votre solution ici
-
-_Votre réponse pour l'exercice 4 :_
-```
-Expliquez votre solution ici
-[Ajoutez vos captures d'écran]
-```
-
 ## Rendu
 
-- Ajoutez l'URL de votre dépôt Github dans  **Classroom** et envoyer la réponse dès le démarage de votre projet.
-- Les push doivent se faire au fûr et à mesure que vous avancez dans votre projet.
-- Le README.md doit être à jour avec vos réponses et captures d'écran. 
-- Chaques exercice doit faire l'objet d'au moins un commit avec un message mentionnant le numéro de l'exercice.
+### Exercice 1 : État et Effets 
+
+J’ai utilisé useState pour stocker la valeur saisie dans le champ de recherche (searchTerm). Avec useEffect, j’ai appliqué un délai de 300ms (debounce) avant de filtrer les produits, ce qui évite d’exécuter la recherche à chaque frappe. Le filtrage est fait via products.filter en comparant les titres en minuscules.
+Cela améliore la performance et l'expérience utilisateur en limitant les calculs inutiles.
+
+Difficultés rencontrées :
+Au début, je n’avais pas nettoyé le timeout dans le useEffect (avec clearTimeout), ce qui causait plusieurs appels simultanés. J’ai corrigé cela en ajoutant la fonction de nettoyage dans le retour du useEffect.
+
+![alt text](<images/Ex 1.png>)
+
+### Exercice 2 : Context et Internationalisation
+
+J’ai créé un LanguageContext avec createContext et un provider qui stocke la langue sélectionnée (fr, en, etc.). Ce contexte est utilisé dans toute l’application pour afficher les textes dans la langue choisie.
+
+Le sélecteur de langue est un simple <select> dans le header qui met à jour la langue dans le contexte. Les composants utilisent ensuite useContext(LanguageContext) pour afficher les textes traduits.
+
+Difficultés rencontrées :
+La gestion des traductions dans tous les composants demande de bien passer le contexte. Au début, certains composants n’étaient pas mis à jour car ils ne consommaient pas correctement le contexte.
+
+![alt text](<images/Ex 2.png>)
+
+### Exercice 3 : Hooks Personnalisés
+
+J’ai extrait la logique de debounce dans un hook useDebounce qui prend une valeur et un délai, et renvoie une valeur "décalée" mise à jour uniquement après le délai. Cela permet de réutiliser facilement le debounce dans différents composants.
+
+Le hook useLocalStorage permet de stocker et récupérer une valeur dans le localStorage, avec synchronisation automatique via un useState et useEffect. Cela facilite la persistance des préférences utilisateur (comme la langue ou le thème).
+
+Difficultés rencontrées :
+Bien gérer les effets de synchronisation avec localStorage, notamment lors de la mise à jour des valeurs, et éviter des boucles infinies dans les hooks.
+
+![alt text](<images/Ex 3.png>)
+
+### Exercice 4 : Gestion Asynchrone et Pagination
+
+J’ai ajouté un bouton de rechargement qui rappelle la fonction de récupération des données. J’ai aussi implémenté la pagination avec des états pour la page courante et le nombre total de pages, et deux boutons "Précédent" et "Suivant" pour naviguer.
+
+Le chargement est affiché via un spinner Bootstrap pendant que les données sont récupérées. En cas d’erreur, un message d’alerte est affiché.
+
+Difficultés rencontrées :
+Gérer la pagination avec les changements de page sans recharger toute la page, et s’assurer que les boutons sont désactivés aux bornes (page 1 et dernière page).
+
+![alt text](<images/Ex 4.png>)
+
+### Remarques générales
+
+Toutes les captures d’écran sont dans le dossier images à la racine du projet.
+
+Chaque exercice a fait l’objet d’au moins un commit avec un message clair mentionnant le numéro de l’exercice (ex : feat: exercice 1 - recherche et debounce)
